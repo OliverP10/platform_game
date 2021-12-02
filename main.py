@@ -16,6 +16,10 @@ platform.load_objects("maps/map1.txt")
 
 player = Player()
 
+
+sprites = pygame.sprite.Group()
+sprites.add
+
 while True: # game loop
     display.fill((136,234,245)) # clear screen by filling it with blue
 
@@ -34,7 +38,7 @@ while True: # game loop
             if event.key == pygame.K_RIGHT:
                 player.moving_right=True
             if event.key == pygame.K_UP:
-                player.jump()
+                player.jump=True
                 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT:

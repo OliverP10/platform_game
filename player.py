@@ -1,11 +1,14 @@
 import pygame
 from animation import Animation
+import math
 
-class Player():
+class Player(pygame.sprite.Sprite):
 
     def __init__(self):
+        super().__init__()
         self.moving_left = False
         self.moving_right = False
+        self.jump = False
         self.change_x = 0
         self.change_y = 0
 
@@ -14,7 +17,7 @@ class Player():
         
         self.image = self.animation_right.get_image()
         self.collision_box = self.image.get_rect()
-        
+
         self.airbourne = False
 
     def draw_player(self,surface,scroll):
@@ -41,13 +44,16 @@ class Player():
             self.change_x = 2
             self.animation_left.image_pointer=0
             self.image = self.animation_right.get_image()
-
-        if self.change_y < 6:   #termianl velocity
-            self.change_y += 0.3
-               
-        collision_direction = [False,False,False,False] #format for collions: LEFT,RIGH,UP,DOWN
-
+        if self.jump:
+            if not self.airbourne:
+                self.change_y -= 6
+                print("jumping")
+            self.jump=False
         
+        if self.change_y < 6:   #termianl velocity
+                self.change_y += 0.3
+
+        collision_direction = [False,False,False,False] #format for collions: LEFT,RIGH,UP,DOWN
         self.collision_box.x += self.change_x
         
         collisions = self.test_collisions(objects)
@@ -59,29 +65,32 @@ class Player():
                 self.collision_box.right = collision.collision_box.left
                 collision_direction[1] = True
 
-        self.collision_box.y += self.change_y
+        self.collision_box.y += math.ceil(self.change_y)    #Will brake the collions is this is int for some reason
 
         collisions = self.test_collisions(objects)
         for collision in collisions:
-            if self.change_y > 0:   #If colliding bottom
+            #print("colliding with something")
+            if self.change_y >= 0:   #If colliding bottom
+                
                 self.collision_box.bottom = collision.collision_box.top
                 collision_direction[3] = True
-                #need to move the jump into here so the update orders work correctly
+                
                 
             if self.change_y < 0:   #If colliding top
                 self.collision_box.top = collision.collision_box.bottom
                 collision_direction[2] = True
                 self.change_y = 0
 
+        
+        print(collision_direction[3])
         if not collision_direction[3]:  #If not colliding bottom
             self.airbourne = True
         else:
             self.airbourne = False
+            self.change_y = 0
 
 
-    def jump(self):
-        if not self.airbourne:
-            self.change_y -= 15
+        
 
 
     

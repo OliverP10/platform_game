@@ -11,10 +11,6 @@ class SpriteCollection(object):
         return image
 
     def get_all_image(self, width, height, flip):
-        #x_count = int(self.sprite_sheet.get_width()/width)
-        #y_count = int(self.sprite_sheet.get_height()/height)
-        #print(x_count)
-        #print(y_count)
         images = []
  
         for y in range(0,self.sprite_sheet.get_height(),height):

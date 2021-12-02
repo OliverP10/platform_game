@@ -6,6 +6,7 @@ class Platform():
 
     def __init__(self):
         self.background_objects = []
+        #self.background_objects = pygame.sprite.group()
 
     def load_objects(self, file_name):  #Takes file name and adds Background_objects to a attribute list
         texture = Texture()
@@ -26,9 +27,10 @@ class Platform():
         for object in self.background_objects:
             surface.blit(object.image, (object.collision_box.x-scroll[0],object.collision_box.y))
 
-class Background_object():
+class Background_object(pygame.sprite.Sprite):
 
     def __init__(self,x,y,textue_image):
+        super().__init__()
         self.image = textue_image
         self.collision_box = pygame.Rect(x,y,self.image.get_width(),self.image.get_height())
 
