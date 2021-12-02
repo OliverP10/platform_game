@@ -1,8 +1,5 @@
 import pygame
-from backgroundmap import MotionPlatform
-from spritecollection import SpriteCollection
-import time
-
+from animation import Animation
 
 class Player():
 
@@ -12,9 +9,10 @@ class Player():
         self.change_x = 0
         self.change_y = 0
 
-        sprite_sheet = SpriteCollection("textures/stickman.png")
-        self.image = sprite_sheet.get_image(0, 0, 20, 20)
-        self.image.set_colorkey((255,255,255))
+        self.animation_right = Animation("textures/stickman_animation_sheet.png", False, 0.1)
+        self.animation_left = Animation("textures/stickman_animation_sheet.png", True, 0.1)
+        
+        self.image = self.animation_right.get_image()
         self.collision_box = self.image.get_rect()
         
         self.airbourne = False
@@ -30,12 +28,20 @@ class Player():
         return collisions
 
     def update(self, objects):
+        self.animation_left.tick()
+        self.animation_right.tick()
+
         if self.moving_right == False and self.moving_left == False:
             self.change_x = 0
         if self.moving_left:
             self.change_x = -2
+            self.animation_right.image_pointer=0
+            self.image = self.animation_left.get_image()
         if self.moving_right:
             self.change_x = 2
+            self.animation_left.image_pointer=0
+            self.image = self.animation_right.get_image()
+            
         
         if self.change_y < 6:
             self.change_y += 0.3
@@ -77,4 +83,6 @@ class Player():
     def jump(self):
         if not self.airbourne:
             self.change_y -= 15
+
+    
 
