@@ -41,9 +41,8 @@ class Player():
             self.change_x = 2
             self.animation_left.image_pointer=0
             self.image = self.animation_right.get_image()
-            
-        
-        if self.change_y < 6:
+
+        if self.change_y < 6:   #termianl velocity
             self.change_y += 0.3
                
         collision_direction = [False,False,False,False] #format for collions: LEFT,RIGH,UP,DOWN
@@ -58,7 +57,6 @@ class Player():
                 collision_direction[0] = True
             if self.change_x > 0:   #If colliding right
                 self.collision_box.right = collision.collision_box.left
-                self.collision_box
                 collision_direction[1] = True
 
         self.collision_box.y += self.change_y
@@ -68,11 +66,12 @@ class Player():
             if self.change_y > 0:   #If colliding bottom
                 self.collision_box.bottom = collision.collision_box.top
                 collision_direction[3] = True
-                
+                #need to move the jump into here so the update orders work correctly
                 
             if self.change_y < 0:   #If colliding top
                 self.collision_box.top = collision.collision_box.bottom
-                collision_direction[2] = True            
+                collision_direction[2] = True
+                self.change_y = 0
 
         if not collision_direction[3]:  #If not colliding bottom
             self.airbourne = True
@@ -83,6 +82,7 @@ class Player():
     def jump(self):
         if not self.airbourne:
             self.change_y -= 15
+
 
     
 
