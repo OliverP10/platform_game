@@ -47,7 +47,6 @@ class Player(pygame.sprite.Sprite):
         if self.jump:
             if not self.airbourne:
                 self.change_y -= 6
-                print("jumping")
             self.jump=False
         
         if self.change_y < 6:   #termianl velocity
@@ -69,7 +68,6 @@ class Player(pygame.sprite.Sprite):
 
         collisions = self.test_collisions(objects)
         for collision in collisions:
-            #print("colliding with something")
             if self.change_y >= 0:   #If colliding bottom
                 
                 self.collision_box.bottom = collision.collision_box.top
@@ -79,10 +77,9 @@ class Player(pygame.sprite.Sprite):
             if self.change_y < 0:   #If colliding top
                 self.collision_box.top = collision.collision_box.bottom
                 collision_direction[2] = True
-                self.change_y = 0
 
         
-        print(collision_direction[3])
+        
         if not collision_direction[3]:  #If not colliding bottom
             self.airbourne = True
         else:

@@ -41,6 +41,7 @@ while True: # game loop
                 player.jump=True
                 
         if event.type == pygame.KEYUP:
+
             if event.key == pygame.K_RIGHT:
                 player.moving_right = False
             if event.key == pygame.K_LEFT:
@@ -50,3 +51,7 @@ while True: # game loop
     screen.blit(pygame.transform.scale(display,WINDOW_SIZE),(0,0))
     pygame.display.update()
     clock.tick(60)
+
+
+#Thigs to do
+#Make the items and backgorund objects load images in the same way!

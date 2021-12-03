@@ -7,7 +7,13 @@ class Texture():
         self.images = {}
 
     def load_all(self):
-        pass
+        sprite_sheet = SpriteCollection("textures/background_tiles.png")
+        textures = sprite_sheet.get_all_image(20, 20,False)
+        with open("textures/index.txt") as f:
+            texture_names = f.read().split("\n")
+        for i in range(len(textures)):
+            self.images[texture_names[i]] = textures[i]
+
 
     def load_grass_bloc(self):
         #sprite_sheet = SpriteCollection("textures/tiles_spritesheet.png")
