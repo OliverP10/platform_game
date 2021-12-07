@@ -1,13 +1,14 @@
 import pygame
 from pygame.locals import * # import pygame modules
+
 from textures import Texture
 from items import Item
 
 class Platform():
+    item_group = pygame.sprite.Group()
 
     def __init__(self):
         self.background_objects = []
-        self.background_items = []
 
     def load_objects(self, file_name):  #Takes file name and adds Background_objects to a attribute list
         texture = Texture()
@@ -26,21 +27,21 @@ class Platform():
                     self.background_objects.append(bg_object)
             elif data[3] == "item":
                 item = Item(int(data[0]),int(data[1]),data[2])
-                self.background_items.append(item)
+                self.item_group.add(item)
 
 
     def draw_background(self,surface, scroll):
         for object in self.background_objects:
-            surface.blit(object.image, (object.collision_box.x-scroll[0],object.collision_box.y))
-        for object in self.background_items:
+            surface.blit(object.image, (object.rect.x - scroll[0], object.rect.y))
+        for object in self.item_group:
             surface.blit(object.image, (object.rect.x-scroll[0],object.rect.y))
             object.animation_tick()
 
 class Background_object():
 
-    def __init__(self,x,y,textue_image):
-        self.image = textue_image
-        self.collision_box = pygame.Rect(x,y,self.image.get_width(),self.image.get_height())
+    def __init__(self, x, y, texture_image):
+        self.image = texture_image
+        self.rect = pygame.Rect(x, y, self.image.get_width(), self.image.get_height())
 
 
 

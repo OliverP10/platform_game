@@ -16,17 +16,17 @@ class Player(pygame.sprite.Sprite):
         self.animation_left = Animation("textures/stickman_animation_sheet.png", True, 0.1)
         
         self.image = self.animation_right.get_image()
-        self.collision_box = self.image.get_rect()
+        self.rect = self.image.get_rect()
 
-        self.airbourne = False
+        self.airborne = False
 
     def draw_player(self,surface,scroll):
-        surface.blit(self.image, (self.collision_box.x-scroll[0],self.collision_box.y))
+        surface.blit(self.image, (self.rect.x - scroll[0], self.rect.y))
 
     def test_collisions(self,objects):
         collisions = []
         for object in objects:
-            if self.collision_box.colliderect(object.collision_box):
+            if self.rect.colliderect(object.rect):
                 collisions.append(object)
         return collisions
 
@@ -45,7 +45,7 @@ class Player(pygame.sprite.Sprite):
             self.animation_left.image_pointer=0
             self.image = self.animation_right.get_image()
         if self.jump:
-            if not self.airbourne:
+            if not self.airborne:
                 self.change_y -= 6
             self.jump=False
         
@@ -53,37 +53,37 @@ class Player(pygame.sprite.Sprite):
                 self.change_y += 0.3
 
         collision_direction = [False,False,False,False] #format for collions: LEFT,RIGH,UP,DOWN
-        self.collision_box.x += self.change_x
+        self.rect.x += self.change_x
         
         collisions = self.test_collisions(objects)
         for collision in collisions:
             if self.change_x < 0:   #If colliding left
-                self.collision_box.left = collision.collision_box.right
+                self.rect.left = collision.rect.right
                 collision_direction[0] = True
             if self.change_x > 0:   #If colliding right
-                self.collision_box.right = collision.collision_box.left
+                self.rect.right = collision.rect.left
                 collision_direction[1] = True
 
-        self.collision_box.y += math.ceil(self.change_y)    #Will brake the collions is this is int for some reason
+        self.rect.y += math.ceil(self.change_y)    #Will brake the collions is this is int for some reason
 
         collisions = self.test_collisions(objects)
         for collision in collisions:
             if self.change_y >= 0:   #If colliding bottom
                 
-                self.collision_box.bottom = collision.collision_box.top
+                self.rect.bottom = collision.rect.top
                 collision_direction[3] = True
                 
                 
             if self.change_y < 0:   #If colliding top
-                self.collision_box.top = collision.collision_box.bottom
+                self.rect.top = collision.rect.bottom
                 collision_direction[2] = True
 
         
         
         if not collision_direction[3]:  #If not colliding bottom
-            self.airbourne = True
+            self.airborne = True
         else:
-            self.airbourne = False
+            self.airborne = False
             self.change_y = 0
 
 
