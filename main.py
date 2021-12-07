@@ -29,7 +29,9 @@ while True: # game loop
     platform.draw_background(display,scroll)
     player.update(platform.background_objects)
     player.draw_player(display,scroll)
-    pygame.sprite.spritecollide(player, Platform.item_group, True)
+    collided_items = pygame.sprite.spritecollide(player, Platform.item_group, True)
+    for item in collided_items:
+        print(item)
 
     for event in pygame.event.get(): # event loop
         if event.type == pygame.QUIT:
