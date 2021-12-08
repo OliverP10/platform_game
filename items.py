@@ -10,6 +10,7 @@ class Item(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.name = image_fn
         #Add cutstom collsion box
         #make it so imag animates
 
@@ -20,4 +21,5 @@ class Item(pygame.sprite.Sprite):
 
     def animation_tick(self):
         self.animation.tick()
+        self.image = self.animation.get_image()
 

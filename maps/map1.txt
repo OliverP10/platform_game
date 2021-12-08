@@ -1,4 +1,4 @@
 0,300,grass_bloc,block,29
 300,280,grass_bloc,block,4
 500,240,cobble,block,4
-320,240,sword_power_up_ground,item
+320,240,coin,item

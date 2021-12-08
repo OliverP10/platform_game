@@ -56,6 +56,20 @@ class Background_object():
         self.image = texture_image
         self.rect = pygame.Rect(x, y, self.image.get_width(), self.image.get_height())
 
+class Game_values():
+
+    def __init__(self):
+        self.environment = {
+            "gravity": 0.3,
+            "air_resistance": 1
+        }
+        self.player = {
+            "speed": 2,
+            "jump": 6,
+            "airbourne_movment": 0.001
+        }
+
+
 
 
 
