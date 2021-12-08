@@ -14,6 +14,7 @@ display = pygame.Surface((600,400)) # used as the surface for rendering, which i
 #item_group = pygame.sprite.Group()
 scroll = [0,0]
 platform = Platform()
+Platform.item_group = pygame.sprite.Group()
 platform.load_objects("maps/map1.txt")
 
 player = Player()
