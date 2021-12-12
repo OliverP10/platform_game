@@ -48,7 +48,7 @@ class Player(pygame.sprite.Sprite):
         self.animation_left.tick()
         self.animation_right.tick()
 
-        print("Change x: "+str(self.change_x))
+        #print("Change x: "+str(self.change_x))
 
         if self.moving_left:                                            #This here is causing the clunky movment I think
             self.change_x += -self.values.player["speed"] - self.change_x   #adds the differnce between max speed and current speed
@@ -106,6 +106,7 @@ class Player(pygame.sprite.Sprite):
             if self.change_y < 0:   #If colliding top
                 self.rect.top = collision.rect.bottom
                 collision_direction[2] = True
+                
 
         
         
