@@ -5,10 +5,23 @@ from textures import Texture
 from items import Item
 
 class Platform():
-    item_group = pygame.sprite.Group()
 
     def __init__(self):
         self.background_objects = []
+        self.item_group = None
+
+    # getter, setter and deleter decorator for attribute
+    @property
+    def item_group(self):
+        return self._item_group
+
+    @item_group.setter
+    def item_group(self, value):
+        self._item_group = value
+
+    @item_group.deleter
+    def item_group(self):
+        del self._item_group
 
     def load_objects(self, file_name):  #Takes file name and adds Background_objects to a attribute list
         texture = Texture()
